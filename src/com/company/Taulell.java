@@ -1,13 +1,10 @@
 package com.company;
 
-import java.util.Scanner;
-
 public class Taulell {
 
     private Casella[][] taulell;
     private final int NUMFILES = 8;
     private final int NUMCOLUMNES = 8;
-    private final static Scanner sc = new Scanner(System.in);
 
     public Taulell(){
 
@@ -26,7 +23,7 @@ public class Taulell {
         }
     }
 
-    public void colocarFitxa(int posicio, Jugador jugador){
+    public Posicio colocarFitxa(int posicio, Jugador jugador){
 
         for (int i = taulell.length-1; i >= 0; i--) {
 
@@ -35,12 +32,229 @@ public class Taulell {
                 taulell[i][posicio].setValorCasella(jugador.getId());
                 taulell[i][posicio].setBuida(false);
                 jugador.addIntents(1);
-                break;
+                return new Posicio(i,posicio);
             }
         }
+        return new Posicio(0,0);
     }
 
+    public boolean partidaGuanyada(Posicio posicio, Jugador jugador){
 
+        if(trovarPrimeraFitxaDiagonalEsquerra(posicio,jugador)){
+            System.out.println("Has guanyat");
+            return true;
+        }else if (trovarPrimeraFitxaDiagonalDreta(posicio,jugador)){
+            System.out.println("Has guanyat");
+            return true;
+        }else if(trovarPrimeraFitxaVertical(posicio, jugador)){
+            System.out.println("Has guanyat");
+            return true;
+        }else if(trovarPrimeraFitxaHorizontal(posicio, jugador)){
+            System.out.println("Has guanyat");
+            return true;
+        }
+        return false;
+    }
+
+    //Comprovacio del connecta 4 de manera diagonal d'esquerra a dreta
+    private boolean comprovacioDiagonalEsquerra(Posicio posicio, Jugador jugador){
+
+        int cuatreEnLinea = 0;
+
+        for (int i = 0; i < 4; i++) {
+
+            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+
+                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+
+                    cuatreEnLinea++;
+                }
+                if(cuatreEnLinea == 4){
+
+                    return true;
+                }
+            }
+            posicio.setPosicioX(posicio.getPosicioX() + 1);
+            posicio.setPosicioY(posicio.getPosicioY() - 1);
+        }
+        return false;
+    }
+
+    private boolean trovarPrimeraFitxaDiagonalEsquerra(Posicio pos, Jugador jugador){
+
+        boolean primeraFitxa = false;
+        Posicio posicio = new Posicio(pos.getPosicioX() + 1, pos.getPosicioY() + 1);
+
+
+        while(!primeraFitxa){
+
+            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+
+                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+
+                    posicio.setPosicioX(posicio.getPosicioX() + 1);
+                    posicio.setPosicioY(posicio.getPosicioY() - 1);
+
+                }else {
+                    primeraFitxa = true;
+                }
+
+            }else {
+
+                primeraFitxa = true;
+            }
+        }
+
+        return comprovacioDiagonalEsquerra(posicio, jugador);
+    }
+
+    //Comprovacio del connecta 4 de manera diagonal de dreta a esquerra
+    private boolean comprovacioDiagonalDreta(Posicio posicio, Jugador jugador){
+
+        int cuatreEnLinea = 0;
+
+        for (int i = 0; i < 4; i++) {
+
+            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+
+                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+
+                    cuatreEnLinea++;
+                }
+                if(cuatreEnLinea == 4){
+
+                    return true;
+                }
+            }
+            posicio.setPosicioX(posicio.getPosicioX() - 1);
+            posicio.setPosicioY(posicio.getPosicioY() - 1);
+        }
+        return false;
+    }
+    private boolean trovarPrimeraFitxaDiagonalDreta(Posicio pos, Jugador jugador){
+
+        boolean primeraFitxa = false;
+        Posicio posicio = new Posicio(pos.getPosicioX() + 1, pos.getPosicioY() + 1);
+
+        while(!primeraFitxa){
+
+            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+
+                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+
+                    posicio.setPosicioX(posicio.getPosicioX() + 1);
+                    posicio.setPosicioY(posicio.getPosicioY() + 1);
+
+                }else {
+                    primeraFitxa = true;
+                }
+
+            }else {
+
+                primeraFitxa = true;
+            }
+        }
+
+        return comprovacioDiagonalDreta(posicio, jugador);
+    }
+
+    //Comprovacio del connecta 4 de manera vertical
+    private boolean comprovacioVertical(Posicio posicio, Jugador jugador){
+
+        int cuatreEnLinea = 0;
+
+        for (int i = 0; i < 4; i++) {
+
+            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+
+                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+
+                    cuatreEnLinea++;
+                }
+                if(cuatreEnLinea == 4){
+
+                    return true;
+                }
+            }
+            posicio.setPosicioX(posicio.getPosicioX() - 1);
+        }
+        return false;
+    }
+
+    private boolean trovarPrimeraFitxaVertical(Posicio pos, Jugador jugador){
+
+        boolean primeraFitxa = false;
+        Posicio posicio = new Posicio(pos.getPosicioX() + 1, pos.getPosicioY() + 1);
+
+        while(!primeraFitxa){
+
+            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+
+                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+
+                    posicio.setPosicioX(posicio.getPosicioX() + 1);
+
+                }else {
+                    primeraFitxa = true;
+                }
+
+            }else {
+
+                primeraFitxa = true;
+            }
+        }
+
+        return comprovacioVertical(posicio, jugador);
+    }
+
+    //Comprovacio del connecta 4 de manera horizontal
+    private boolean comprovacioHorizontal(Posicio posicio, Jugador jugador){
+
+        int cuatreEnLinea = 0;
+
+        for (int i = 0; i < 4; i++) {
+
+            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+
+                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+
+                    cuatreEnLinea++;
+                }
+                if(cuatreEnLinea == 4){
+
+                    return true;
+                }
+            }
+            posicio.setPosicioY(posicio.getPosicioY() + 1);
+        }
+        return false;
+    }
+
+    private boolean trovarPrimeraFitxaHorizontal(Posicio pos, Jugador jugador){
+
+        boolean primeraFitxa = false;
+        Posicio posicio = new Posicio(pos.getPosicioX(), pos.getPosicioY());
+
+        while(!primeraFitxa){
+
+            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() <= getNumFiles() && posicio.getPosicioY() <= getNumColumnes()){
+
+                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+
+                    posicio.setPosicioY(posicio.getPosicioY() - 1);
+
+                }else {
+                    primeraFitxa = true;
+                }
+
+            }else {
+
+                primeraFitxa = true;
+            }
+        }
+
+        return comprovacioHorizontal(posicio, jugador);
+    }
 
     public int getNumFiles() {
         return NUMFILES;

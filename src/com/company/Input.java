@@ -15,12 +15,12 @@ public class Input {
     public static int posarFitxa( Jugador jugador){
 
         System.out.print(jugador.getNom() + " posa un numero : ");
-        int posicio = PosarNumero.esNecessitaNumero()-1;
+        int posicio = PosarNumero.esNecessitaNumero() - 1;
 
         while(!(posicio >= 0 && posicio < 9)){
 
             System.out.print("Has posat un numero massa gran, torna a posar un numero: ");
-            posicio = PosarNumero.esNecessitaNumero()-1;
+            posicio = PosarNumero.esNecessitaNumero() - 1;
         }
         return posicio;
     }

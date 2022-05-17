@@ -5,6 +5,7 @@ public class InteraccioJoc {
     private static final Jugador j1 = new Jugador(1);
     private static final Jugador j2 = new Jugador(2);
     private final static Taulell taulell = new Taulell();
+    private final static boolean partidaGuanyada = true;
 
 
     public static void partida() {
@@ -17,9 +18,15 @@ public class InteraccioJoc {
         while (true) {
 
             Output.imprimirTaulell(casella);
-            taulell.colocarFitxa(Input.posarFitxa(j1), j1);
+            //taulell.colocarFitxa(Input.posarFitxa(j1), j1);
+            if(partidaGuanyada == taulell.partidaGuanyada(taulell.colocarFitxa(Input.posarFitxa(j1), j1), j1)){
+                break;
+            }
             Output.imprimirTaulell(casella);
-            taulell.colocarFitxa(Input.posarFitxa(j2), j2);
+            //taulell.colocarFitxa(Input.posarFitxa(j2), j2);
+            if(partidaGuanyada == taulell.partidaGuanyada(taulell.colocarFitxa(Input.posarFitxa(j2), j2),j2)){
+                break;
+            }
         }
 
 
