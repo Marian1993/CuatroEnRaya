@@ -41,16 +41,12 @@ public class Taulell {
     public boolean partidaGuanyada(Posicio posicio, Jugador jugador){
 
         if(trovarPrimeraFitxaDiagonalEsquerra(posicio,jugador)){
-            System.out.println("Has guanyat");
             return true;
         }else if (trovarPrimeraFitxaDiagonalDreta(posicio,jugador)){
-            System.out.println("Has guanyat");
             return true;
         }else if(trovarPrimeraFitxaVertical(posicio, jugador)){
-            System.out.println("Has guanyat");
             return true;
         }else if(trovarPrimeraFitxaHorizontal(posicio, jugador)){
-            System.out.println("Has guanyat");
             return true;
         }
         return false;
@@ -63,7 +59,7 @@ public class Taulell {
 
         for (int i = 0; i < 4; i++) {
 
-            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
 
                 if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
@@ -73,38 +69,32 @@ public class Taulell {
 
                     return true;
                 }
+                posicio.setPosicioX(posicio.getPosicioX() - 1);
+                posicio.setPosicioY(posicio.getPosicioY() - 1);
             }
-            posicio.setPosicioX(posicio.getPosicioX() + 1);
-            posicio.setPosicioY(posicio.getPosicioY() - 1);
         }
         return false;
     }
 
     private boolean trovarPrimeraFitxaDiagonalEsquerra(Posicio pos, Jugador jugador){
 
-        boolean primeraFitxa = false;
-        Posicio posicio = new Posicio(pos.getPosicioX() + 1, pos.getPosicioY() + 1);
+        Posicio posicio = new Posicio(pos.getPosicioX(), pos.getPosicioY());
 
+        while(true){
 
-        while(!primeraFitxa){
+            if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
-            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
-
-                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+                if(posicio.getPosicioY() != getNumColumnes()-1 && posicio.getPosicioX() != getNumFiles()-1){
 
                     posicio.setPosicioX(posicio.getPosicioX() + 1);
-                    posicio.setPosicioY(posicio.getPosicioY() - 1);
-
+                    posicio.setPosicioY(posicio.getPosicioY() + 1);
                 }else {
-                    primeraFitxa = true;
+                    break;
                 }
-
             }else {
-
-                primeraFitxa = true;
+                break;
             }
         }
-
         return comprovacioDiagonalEsquerra(posicio, jugador);
     }
 
@@ -115,7 +105,7 @@ public class Taulell {
 
         for (int i = 0; i < 4; i++) {
 
-            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
 
                 if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
@@ -125,36 +115,31 @@ public class Taulell {
 
                     return true;
                 }
+                posicio.setPosicioX(posicio.getPosicioX() - 1);
+                posicio.setPosicioY(posicio.getPosicioY() + 1);
             }
-            posicio.setPosicioX(posicio.getPosicioX() - 1);
-            posicio.setPosicioY(posicio.getPosicioY() - 1);
         }
         return false;
     }
     private boolean trovarPrimeraFitxaDiagonalDreta(Posicio pos, Jugador jugador){
 
-        boolean primeraFitxa = false;
-        Posicio posicio = new Posicio(pos.getPosicioX() + 1, pos.getPosicioY() + 1);
+        Posicio posicio = new Posicio(pos.getPosicioX(), pos.getPosicioY());
 
-        while(!primeraFitxa){
+        while(true){
 
-            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+            if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
-                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+                if(posicio.getPosicioX() != getNumFiles()-1 && posicio.getPosicioY() != 0 ){
 
                     posicio.setPosicioX(posicio.getPosicioX() + 1);
-                    posicio.setPosicioY(posicio.getPosicioY() + 1);
-
+                    posicio.setPosicioY(posicio.getPosicioY() - 1);
                 }else {
-                    primeraFitxa = true;
+                    break;
                 }
-
             }else {
-
-                primeraFitxa = true;
+                break;
             }
         }
-
         return comprovacioDiagonalDreta(posicio, jugador);
     }
 
@@ -165,7 +150,7 @@ public class Taulell {
 
         for (int i = 0; i < 4; i++) {
 
-            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
 
                 if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
@@ -175,35 +160,30 @@ public class Taulell {
 
                     return true;
                 }
+                posicio.setPosicioX(posicio.getPosicioX() - 1);
             }
-            posicio.setPosicioX(posicio.getPosicioX() - 1);
         }
         return false;
     }
 
     private boolean trovarPrimeraFitxaVertical(Posicio pos, Jugador jugador){
 
-        boolean primeraFitxa = false;
-        Posicio posicio = new Posicio(pos.getPosicioX() + 1, pos.getPosicioY() + 1);
+        Posicio posicio = new Posicio(pos.getPosicioX(), pos.getPosicioY());
 
-        while(!primeraFitxa){
+        while(true){
 
-            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+            if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
-                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+                if(posicio.getPosicioX() != 7){
 
                     posicio.setPosicioX(posicio.getPosicioX() + 1);
-
                 }else {
-                    primeraFitxa = true;
+                    break;
                 }
-
             }else {
-
-                primeraFitxa = true;
+                break;
             }
         }
-
         return comprovacioVertical(posicio, jugador);
     }
 
@@ -224,35 +204,30 @@ public class Taulell {
 
                     return true;
                 }
+                posicio.setPosicioY(posicio.getPosicioY() + 1);
             }
-            posicio.setPosicioY(posicio.getPosicioY() + 1);
         }
         return false;
     }
 
     private boolean trovarPrimeraFitxaHorizontal(Posicio pos, Jugador jugador){
 
-        boolean primeraFitxa = false;
         Posicio posicio = new Posicio(pos.getPosicioX(), pos.getPosicioY());
 
-        while(!primeraFitxa){
+        while(true){
 
-            if ( posicio.getPosicioX() > 0 && posicio.getPosicioY() > 0 && posicio.getPosicioX() <= getNumFiles() && posicio.getPosicioY() <= getNumColumnes()){
+            if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
-                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+                if (posicio.getPosicioY() != 0){
 
                     posicio.setPosicioY(posicio.getPosicioY() - 1);
-
                 }else {
-                    primeraFitxa = true;
+                    break;
                 }
-
             }else {
-
-                primeraFitxa = true;
+                break;
             }
         }
-
         return comprovacioHorizontal(posicio, jugador);
     }
 

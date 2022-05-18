@@ -13,12 +13,6 @@ public class Output {
                 }else {
                     System.out.print("【 " + Color.colorJugador(casella[i][j].getValorCasella()) + " 】");
                 }
-
-                    /*if(casella[i][j].isJ1()){
-                    System.out.print("【 " + Color.ANSI_BLUE + "●"+ Color.ANSI_RESET + " 】");
-                }else if(casella[i][j].isJ2()){
-                    System.out.print("【 " + Color.ANSI_YELLOW + "●"+ Color.ANSI_RESET + " 】");
-                }*/
             }
             System.out.println();
         }
