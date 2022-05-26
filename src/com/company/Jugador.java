@@ -3,12 +3,12 @@ package com.company;
 public class Jugador {
 
     private String nom;
-    private final int id;
+    private final int ID;
     private int intents;
 
     public Jugador(int id){
 
-        this.id = id;
+        this.ID = id;
     }
 
     public String getNom() {
@@ -28,6 +28,6 @@ public class Jugador {
     }
 
     public int getId() {
-        return id;
+        return ID;
     }
 }

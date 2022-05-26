@@ -4,12 +4,12 @@ import java.util.Scanner;
 
 public class PosarNumero {
 
-    private static Scanner sc = new Scanner(System.in);
+    private final static Scanner sc = new Scanner(System.in);
     public static int esNecessitaNumero(){
 
         while(true) {
             String paraula = sc.nextLine();
-            int num = 0;
+            int num;
             try {
 
                 num = Integer.parseInt(paraula);
@@ -18,7 +18,7 @@ public class PosarNumero {
 
             } catch (NumberFormatException e) {
 
-                System.err.println("Has de posar un número");
+                System.err.print("Has de posar un número: ");
             }
         }
     }

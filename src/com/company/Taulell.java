@@ -3,8 +3,9 @@ package com.company;
 public class Taulell {
 
     private Casella[][] taulell;
-    private final int NUMFILES = 8;
-    private final int NUMCOLUMNES = 8;
+    public final int NUMFILES = 8;
+    public final int NUMCOLUMNES = 8;
+    private final int TOTALCASELLES = 64;
 
     public Taulell(){
 
@@ -38,6 +39,22 @@ public class Taulell {
         return new Posicio(0,0);
     }
 
+    public boolean taulellComplet(){
+
+        int casellesNoBuides = 0;
+
+        for (int i = 0; i < taulell.length; i++) {
+
+            for (int j = 0; j < taulell[i].length; j++) {
+
+                if(!taulell[i][j].isBuida()){
+                    casellesNoBuides++;
+                }
+            }
+        }
+        return casellesNoBuides == TOTALCASELLES;
+    }
+
     public boolean partidaGuanyada(Posicio posicio, Jugador jugador){
 
         if(trovarPrimeraFitxaDiagonalEsquerra(posicio,jugador)){
@@ -59,7 +76,7 @@ public class Taulell {
 
         for (int i = 0; i < 4; i++) {
 
-            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < NUMFILES && posicio.getPosicioY() < NUMCOLUMNES){
 
                 if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
@@ -82,15 +99,10 @@ public class Taulell {
 
         while(true){
 
-            if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+            if(posicio.getPosicioY() != NUMCOLUMNES-1 && posicio.getPosicioX() != NUMFILES-1 && taulell[posicio.getPosicioX() + 1][posicio.getPosicioY() + 1].getValorCasella() == jugador.getId()){
 
-                if(posicio.getPosicioY() != getNumColumnes()-1 && posicio.getPosicioX() != getNumFiles()-1){
-
-                    posicio.setPosicioX(posicio.getPosicioX() + 1);
-                    posicio.setPosicioY(posicio.getPosicioY() + 1);
-                }else {
-                    break;
-                }
+                posicio.setPosicioX(posicio.getPosicioX() + 1);
+                posicio.setPosicioY(posicio.getPosicioY() + 1);
             }else {
                 break;
             }
@@ -105,7 +117,7 @@ public class Taulell {
 
         for (int i = 0; i < 4; i++) {
 
-            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < NUMFILES && posicio.getPosicioY() < NUMCOLUMNES){
 
                 if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
@@ -127,15 +139,10 @@ public class Taulell {
 
         while(true){
 
-            if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+            if(posicio.getPosicioX() != NUMFILES-1 && posicio.getPosicioY() != 0 && taulell[posicio.getPosicioX() + 1][posicio.getPosicioY() - 1].getValorCasella() == jugador.getId()){
 
-                if(posicio.getPosicioX() != getNumFiles()-1 && posicio.getPosicioY() != 0 ){
-
-                    posicio.setPosicioX(posicio.getPosicioX() + 1);
-                    posicio.setPosicioY(posicio.getPosicioY() - 1);
-                }else {
-                    break;
-                }
+                posicio.setPosicioX(posicio.getPosicioX() + 1);
+                posicio.setPosicioY(posicio.getPosicioY() - 1);
             }else {
                 break;
             }
@@ -150,7 +157,7 @@ public class Taulell {
 
         for (int i = 0; i < 4; i++) {
 
-            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < NUMFILES && posicio.getPosicioY() < NUMCOLUMNES){
 
                 if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
@@ -172,14 +179,9 @@ public class Taulell {
 
         while(true){
 
-            if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+            if(posicio.getPosicioX() != 7 && taulell[posicio.getPosicioX() + 1][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
-                if(posicio.getPosicioX() != 7){
-
-                    posicio.setPosicioX(posicio.getPosicioX() + 1);
-                }else {
-                    break;
-                }
+                posicio.setPosicioX(posicio.getPosicioX() + 1);
             }else {
                 break;
             }
@@ -194,7 +196,7 @@ public class Taulell {
 
         for (int i = 0; i < 4; i++) {
 
-            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < getNumFiles() && posicio.getPosicioY() < getNumColumnes()){
+            if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < NUMFILES && posicio.getPosicioY() < NUMCOLUMNES){
 
                 if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
@@ -216,14 +218,9 @@ public class Taulell {
 
         while(true){
 
-            if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+            if (posicio.getPosicioY() != 0  && taulell[posicio.getPosicioX()][posicio.getPosicioY() - 1].getValorCasella() == jugador.getId()){
 
-                if (posicio.getPosicioY() != 0){
-
-                    posicio.setPosicioY(posicio.getPosicioY() - 1);
-                }else {
-                    break;
-                }
+                posicio.setPosicioY(posicio.getPosicioY() - 1);
             }else {
                 break;
             }
@@ -231,11 +228,4 @@ public class Taulell {
         return comprovacioHorizontal(posicio, jugador);
     }
 
-    public int getNumFiles() {
-        return NUMFILES;
-    }
-
-    public int getNumColumnes() {
-        return NUMCOLUMNES;
-    }
 }

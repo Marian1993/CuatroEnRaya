@@ -19,7 +19,7 @@ public class Input {
 
         while(!(posicio >= 0 && posicio < 9)){
 
-            System.out.print("Has posat un numero massa gran, torna a posar un numero: ");
+            System.out.print("Has posat un numero incorrecta, torna a posar un numero: ");
             posicio = PosarNumero.esNecessitaNumero() - 1;
         }
         return posicio;
