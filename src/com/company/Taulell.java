@@ -2,58 +2,49 @@ package com.company;
 
 public class Taulell {
 
-    private Casella[][] taulell;
+    private Casella[][] casellas;
     public final int NUMFILES = 8;
     public final int NUMCOLUMNES = 8;
-    private final int TOTALCASELLES = 64;
+    private final int CASELLESTOTALS = 64;
+    private int casellesOmplides = 0;
+
 
     public Taulell(){
-
+        casellas = new Casella[NUMFILES][NUMCOLUMNES];
+        inicialitzarTaulell();
     }
     
-    public void inicialitzarTaulell( Casella[][] caselles){
+    private void inicialitzarTaulell(){
 
-        this.taulell = caselles;
+        for (int i = 0; i < casellas.length; i++) {
 
-        for (int i = 0; i < taulell.length; i++) {
+            for (int j = 0; j < casellas[i].length; j++) {
 
-            for (int j = 0; j < taulell[i].length; j++) {
-
-                taulell[i][j] = new Casella();
+                casellas[i][j] = new Casella();
             }
         }
     }
 
     public Posicio colocarFitxa(int posicio, Jugador jugador){
 
-        for (int i = taulell.length-1; i >= 0; i--) {
+        for (int i = casellas.length-1; i >= 0; i--) {
 
-            if(taulell[i][posicio].isBuida()){
+            if(casellas[i][posicio].isBuida()){
 
-                taulell[i][posicio].setValorCasella(jugador.getId());
-                taulell[i][posicio].setBuida(false);
+                casellas[i][posicio].setValorCasella(jugador.getId());
+                casellas[i][posicio].setBuida(false);
                 jugador.addIntents(1);
+                addCasellesOmplides(1);
                 return new Posicio(i,posicio);
             }
         }
         return new Posicio(0,0);
     }
 
-    //Aquest metode retorna un bolean si el taulell no li queden més caselles buides
+    //Aquest metode retorna un boolean si el taulell no li queden més caselles buides
     public boolean taulellComplet(){
 
-        int casellesNoBuides = 0;
-
-        for (int i = 0; i < taulell.length; i++) {
-
-            for (int j = 0; j < taulell[i].length; j++) {
-
-                if(!taulell[i][j].isBuida()){
-                    casellesNoBuides++;
-                }
-            }
-        }
-        return casellesNoBuides == TOTALCASELLES;
+        return getCasellesOmplides() == CASELLESTOTALS;
     }
 
     //Aqui fa lescomprovacions a totes les direccions
@@ -80,7 +71,7 @@ public class Taulell {
 
             if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < NUMFILES && posicio.getPosicioY() < NUMCOLUMNES){
 
-                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+                if (casellas[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
                     cuatreEnLinea++;
                 }
@@ -101,7 +92,7 @@ public class Taulell {
 
         while(true){
 
-            if(posicio.getPosicioY() != NUMCOLUMNES-1 && posicio.getPosicioX() != NUMFILES-1 && taulell[posicio.getPosicioX() + 1][posicio.getPosicioY() + 1].getValorCasella() == jugador.getId()){
+            if(posicio.getPosicioY() != NUMCOLUMNES-1 && posicio.getPosicioX() != NUMFILES-1 && casellas[posicio.getPosicioX() + 1][posicio.getPosicioY() + 1].getValorCasella() == jugador.getId()){
 
                 posicio.setPosicioX(posicio.getPosicioX() + 1);
                 posicio.setPosicioY(posicio.getPosicioY() + 1);
@@ -121,7 +112,7 @@ public class Taulell {
 
             if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < NUMFILES && posicio.getPosicioY() < NUMCOLUMNES){
 
-                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+                if (casellas[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
                     cuatreEnLinea++;
                 }
@@ -141,7 +132,7 @@ public class Taulell {
 
         while(true){
 
-            if(posicio.getPosicioX() != NUMFILES-1 && posicio.getPosicioY() != 0 && taulell[posicio.getPosicioX() + 1][posicio.getPosicioY() - 1].getValorCasella() == jugador.getId()){
+            if(posicio.getPosicioX() != NUMFILES-1 && posicio.getPosicioY() != 0 && casellas[posicio.getPosicioX() + 1][posicio.getPosicioY() - 1].getValorCasella() == jugador.getId()){
 
                 posicio.setPosicioX(posicio.getPosicioX() + 1);
                 posicio.setPosicioY(posicio.getPosicioY() - 1);
@@ -161,7 +152,7 @@ public class Taulell {
 
             if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < NUMFILES && posicio.getPosicioY() < NUMCOLUMNES){
 
-                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+                if (casellas[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
                     cuatreEnLinea++;
                 }
@@ -181,7 +172,7 @@ public class Taulell {
 
         while(true){
 
-            if(posicio.getPosicioX() != 7 && taulell[posicio.getPosicioX() + 1][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+            if(posicio.getPosicioX() != 7 && casellas[posicio.getPosicioX() + 1][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
                 posicio.setPosicioX(posicio.getPosicioX() + 1);
             }else {
@@ -200,7 +191,7 @@ public class Taulell {
 
             if ( posicio.getPosicioX() >= 0 && posicio.getPosicioY() >= 0 && posicio.getPosicioX() < NUMFILES && posicio.getPosicioY() < NUMCOLUMNES){
 
-                if (taulell[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
+                if (casellas[posicio.getPosicioX()][posicio.getPosicioY()].getValorCasella() == jugador.getId()){
 
                     cuatreEnLinea++;
                 }
@@ -220,7 +211,7 @@ public class Taulell {
 
         while(true){
 
-            if (posicio.getPosicioY() != 0  && taulell[posicio.getPosicioX()][posicio.getPosicioY() - 1].getValorCasella() == jugador.getId()){
+            if (posicio.getPosicioY() != 0  && casellas[posicio.getPosicioX()][posicio.getPosicioY() - 1].getValorCasella() == jugador.getId()){
 
                 posicio.setPosicioY(posicio.getPosicioY() - 1);
             }else {
@@ -230,4 +221,15 @@ public class Taulell {
         return comprovacioHorizontal(posicio, jugador);
     }
 
+    public int getCasellesOmplides() {
+        return casellesOmplides;
+    }
+
+    public void addCasellesOmplides(int casellesOmplides) {
+        this.casellesOmplides += casellesOmplides;
+    }
+
+    public Casella[][] getCasellas() {
+        return casellas;
+    }
 }
