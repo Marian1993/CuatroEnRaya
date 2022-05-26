@@ -8,28 +8,39 @@ public class InteraccioJoc {
 
     public static void partida() {
 
-        Casella[][] casella = new Casella[taulell.NUMFILES][taulell.NUMCOLUMNES];
-        taulell.inicialitzarTaulell(casella);
-        Input.nomJugador(j1);
-        Input.nomJugador(j2);
+        do {
 
-        while (!taulell.taulellComplet()) {
+            Casella[][] casella = new Casella[taulell.NUMFILES][taulell.NUMCOLUMNES];
+            taulell.inicialitzarTaulell(casella);
+            Input.nomJugador(j1);
+            Input.nomJugador(j2);
+            boolean partidaGuanyada = false;
 
-            Output.imprimirTaulell(casella);
-            if(taulell.partidaGuanyada(taulell.colocarFitxa(Input.posarFitxa(j1), j1),j1)){
-                System.out.println("El jugador " + j1.getNom() + " ha guanyat amb " + j1.getIntents() + " intents");
+
+            while (!taulell.taulellComplet()) {
+
                 Output.imprimirTaulell(casella);
-                break;
-            }
-            Output.imprimirTaulell(casella);
-            if(taulell.partidaGuanyada(taulell.colocarFitxa(Input.posarFitxa(j2), j2),j2)){
-                System.out.println("El jugador " + j2.getNom() + " ha guanyat amb " + j2.getIntents() + " intents");
+                if (taulell.partidaGuanyada(taulell.colocarFitxa(Input.posarFitxa(j1), j1), j1)) {
+                    System.out.println("El jugador " + j1.getNom() + " ha guanyat amb " + j1.getIntents() + " intents");
+                    Output.imprimirTaulell(casella);
+                    partidaGuanyada = true;
+                    break;
+                }
                 Output.imprimirTaulell(casella);
-                break;
+                if (taulell.partidaGuanyada(taulell.colocarFitxa(Input.posarFitxa(j2), j2), j2)) {
+                    System.out.println("El jugador " + j2.getNom() + " ha guanyat amb " + j2.getIntents() + " intents");
+                    Output.imprimirTaulell(casella);
+                    partidaGuanyada = true;
+                    break;
+                }
             }
-        }
-        Output.imprimirTaulell(casella);
-        System.out.println("El taulell ja no te més posicions per omplir, heu empatat!☺");
+            if(!partidaGuanyada){
+                Output.imprimirTaulell(casella);
+                System.out.println("El taulell ja no te més posicions per omplir, heu empatat!☺");
+            }
+
+        }while (Input.reiniciaJoc());
     }
+
 }
 

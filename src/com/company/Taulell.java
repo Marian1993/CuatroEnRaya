@@ -39,6 +39,7 @@ public class Taulell {
         return new Posicio(0,0);
     }
 
+    //Aquest metode retorna un bolean si el taulell no li queden més caselles buides
     public boolean taulellComplet(){
 
         int casellesNoBuides = 0;
@@ -55,6 +56,7 @@ public class Taulell {
         return casellesNoBuides == TOTALCASELLES;
     }
 
+    //Aqui fa lescomprovacions a totes les direccions
     public boolean partidaGuanyada(Posicio posicio, Jugador jugador){
 
         if(trovarPrimeraFitxaDiagonalEsquerra(posicio,jugador)){

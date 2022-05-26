@@ -24,4 +24,12 @@ public class Input {
         }
         return posicio;
     }
+
+    public static boolean reiniciaJoc(){
+
+        System.out.println("Reiniciar partida = 0 \n" + "Per sortir pitja cualsevol numero");
+        int reinici = PosarNumero.esNecessitaNumero();
+
+        return reinici == 0;
+    }
 }
